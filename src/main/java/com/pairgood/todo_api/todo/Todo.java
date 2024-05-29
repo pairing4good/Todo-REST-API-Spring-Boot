@@ -1,6 +1,8 @@
 package com.pairgood.todo_api.todo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +12,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -42,9 +45,9 @@ public class Todo {
 
     @FutureOrPresent
     @Column(name = "todo_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
-    private Date todoDate;
+    private LocalDate todoDate;
 
     @Column(name = "creation_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -66,6 +69,8 @@ public class Todo {
         isComplete = complete;
     }
 
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public long getTodoId() {
         return TodoId;
     }
@@ -90,14 +95,15 @@ public class Todo {
         this.todoDescription = todoDescription;
     }
 
-    public Date getTodoDate() {
+    public LocalDate getTodoDate() {
         return todoDate;
     }
 
-    public void setTodoDate(Date todoDate) {
+    public void setTodoDate(LocalDate todoDate) {
         this.todoDate = todoDate;
     }
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Date getCreationDate() {
         return creationDate;
     }
@@ -106,6 +112,7 @@ public class Todo {
         this.creationDate = creationDate;
     }
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Date getUpdateDate() {
         return updateDate;
     }
