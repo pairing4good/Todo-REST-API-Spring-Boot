@@ -1,10 +1,10 @@
-package com.example.todo_api;
+package com.pairgood.todo_api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TodoApiApplicationTests {
+public class TodoApiApplicationTests {
 
 	@Test
 	void contextLoads() {

@@ -1,4 +1,4 @@
-package com.claykab.todo_api.exception;
+package com.pairgood.todo_api.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

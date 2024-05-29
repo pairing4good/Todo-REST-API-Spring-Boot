@@ -1,11 +1,11 @@
-package com.claykab.todo_api.todo;
+package com.pairgood.todo_api.todo;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -17,23 +17,6 @@ public class TodoController {
 
     @Autowired
     private TodoService todoService;
-
-
-    /**
-     *Use the following to add an item to the list
-     * {
-     *         "todoTitle": "Buy  Java book",
-     *         "todoDescription": "Buy java book online",
-     *         "isComplete": false,
-     *         "todoDate": "20-05-2020"
-     *
-     *     }
-     */
-    /**
-     * endpoint for add item
-     * @param todo
-     * @return
-     */
 
     @RequestMapping(method = RequestMethod.POST, value = "/additem")
     public ResponseEntity<ResponseTodoList> AddItemTolist(@Valid @RequestBody Todo todo){

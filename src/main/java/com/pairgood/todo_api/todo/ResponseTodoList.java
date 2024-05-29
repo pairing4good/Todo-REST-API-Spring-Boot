@@ -1,4 +1,4 @@
-package com.claykab.todo_api.todo;
+package com.pairgood.todo_api.todo;
 
 import org.springframework.http.HttpStatus;
 
