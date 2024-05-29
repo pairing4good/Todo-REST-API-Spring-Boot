@@ -30,3 +30,4 @@ target/
 
 ### VS Code ###
 .vscode/
+/testdb.trace.db
