@@ -8,10 +8,10 @@ add item to a to-do list, update, select and remove from the list.
 * Make sure you have [Java 17 JDK](https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/downloads-list.html) installed
 
 ### Test
-* Run the tests `./mvnw test`
+* Run the tests `./mvnw test` (mac) or `mvnw.cmd test` (windows)
 
 ### Usage
-* Run the application `./mvnw spring-boot:run`
+* Run the application `./mvnw spring-boot:run` (mac) or `mvnw.cmd spring-boot:run` (windows)
 * Navigate to http://localhost:8080/swagger-ui.html
 
 ## Swagger UI:
