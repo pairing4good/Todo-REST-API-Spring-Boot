@@ -47,7 +47,7 @@ As a result, we should write unit tests, which are at the bottom of the pyramid,
 
 - UI/ End-to-end: starts up the entire application and tests it as a black box.
     - [@SpringBootTest](https://spring.io/guides/gs/testing-web#_test_the_application)
-    - [TestRestTemplate](https://spring.io/guides/gs/testing-web#_test_the_application)
+    - [TestRestTemplate](https://www.baeldung.com/spring-boot-testresttemplate)
 
 
 
