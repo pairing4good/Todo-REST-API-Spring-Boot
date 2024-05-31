@@ -84,21 +84,15 @@ public class TodoController {
         boolean isTodoIdValid=todoService.isTodoItemIdValid(deleteTodoId);
 
         if(isTodoIdValid){
-
             todoService.DeleteItem(deleteTodoId);
 
-
-                ResponseTodoList responseTodoList= new ResponseTodoList("Item deleted", HttpStatus.OK);
-                logger.info(responseTodoList.getMessage()+". code: "+responseTodoList.getCode());
-                return new ResponseEntity<>(responseTodoList, HttpStatus.OK);
-
-
-
+            ResponseTodoList responseTodoList= new ResponseTodoList("Item deleted", HttpStatus.OK);
+            logger.info(responseTodoList.getMessage()+". code: "+responseTodoList.getCode());
+            return new ResponseEntity<>(responseTodoList, HttpStatus.OK);
         }else {
             ResponseTodoList responseTodoList = new ResponseTodoList("Request not successful, invalid information provided. Please try again.", HttpStatus.NOT_FOUND);
 
             return new ResponseEntity<>(responseTodoList, HttpStatus.NOT_FOUND);
-
         }
     }
 

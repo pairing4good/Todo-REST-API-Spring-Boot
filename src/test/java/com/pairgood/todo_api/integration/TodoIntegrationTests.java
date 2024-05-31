@@ -162,6 +162,36 @@ public class TodoIntegrationTests {
     }
 
     @Test
+    void shouldDelete_WhenTodoIsValid() throws Exception{
+        when(service.isTodoItemIdValid(anyLong())).thenReturn(true);
+
+        this.mockMvc.perform(delete("/api/v1/todo/deleteitem/1"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(content().json("{" +
+                        "\"message\":\"Item deleted\"," +
+                        "\"code\":200," +
+                        "\"httpStatus\":\"OK\"" +
+                        "}"));
+
+        verify(logger).info("Item deleted. code: 200");
+    }
+
+    @Test
+    void shouldNotDelete_WhenTodoIsInValid() throws Exception{
+        when(service.isTodoItemIdValid(anyLong())).thenReturn(false);
+
+        this.mockMvc.perform(delete("/api/v1/todo/deleteitem/1"))
+                .andDo(print()).andExpect(status().isNotFound())
+                .andExpect(content().json("{" +
+                        "\"message\":\"Request not successful, invalid information provided. Please try again.\"," +
+                        "\"code\":404," +
+                        "\"httpStatus\":\"NOT_FOUND\"" +
+                        "}"));
+
+        verifyNoInteractions(logger);
+    }
+
+    @Test
     void shouldListTodos_WhenTodosFound() throws Exception{
         Todo todo = new Todo(0, "test title", "test description",
                 false, LocalDate.of(2024, 4, 24), null, null);
