@@ -12,7 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.hamcrest.Matchers.containsString;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -91,6 +90,75 @@ public class TodoIntegrationTests {
                         "}"));
 
         verify(logger).info("Item Not added to todo list. code: 400");
+    }
+
+    @Test
+    void shouldUpdateTodo_WhenTodoExists() throws Exception{
+        long savedId = 1L;
+
+        Todo todo = new Todo(0, "test title", "test description",
+                false, LocalDate.now(), null, null);
+        String todoString = mapper.writeValueAsString(todo);
+
+        when(service.isTodoItemIdValid(anyLong())).thenReturn(true);
+        when(service.UpdateTodoItem(anyLong(), any(Todo.class))).thenReturn(savedId);
+
+        this.mockMvc.perform(put("/api/v1/todo/updateitem/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(todoString))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(content().json("{" +
+                        "\"message\":\"Item with the following title test title updated\"," +
+                        "\"code\":200," +
+                        "\"httpStatus\":\"OK\"" +
+                        "}"));
+
+        verify(logger).info("Item with the following title test title updated. code: 200");
+    }
+
+    @Test
+    void shouldNotUpdateTodo_WhenTodoIsInvalid() throws Exception{
+        Todo todo = new Todo(0, "test title", "test description",
+                false, LocalDate.now(), null, null);
+        String todoString = mapper.writeValueAsString(todo);
+
+        when(service.isTodoItemIdValid(anyLong())).thenReturn(false);
+
+        this.mockMvc.perform(put("/api/v1/todo/updateitem/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(todoString))
+                .andDo(print()).andExpect(status().isNotFound())
+                .andExpect(content().json("{" +
+                        "\"message\":\"Request not successful, invalid information provided. Please try again.\"," +
+                        "\"code\":404," +
+                        "\"httpStatus\":\"NOT_FOUND\"" +
+                        "}"));
+
+        verifyNoInteractions(logger);
+    }
+
+    @Test
+    void shouldNotUpdateTodo_WhenTodoIsValid_ButNoTodoExists() throws Exception{
+        long unsavedIndicator = 0L;
+
+        Todo todo = new Todo(0, "test title", "test description",
+                false, LocalDate.now(), null, null);
+        String todoString = mapper.writeValueAsString(todo);
+
+        when(service.isTodoItemIdValid(anyLong())).thenReturn(true);
+        when(service.UpdateTodoItem(anyLong(), any(Todo.class))).thenReturn(unsavedIndicator);
+
+        this.mockMvc.perform(put("/api/v1/todo/updateitem/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(todoString))
+                .andDo(print()).andExpect(status().isBadRequest())
+                .andExpect(content().json("{" +
+                        "\"message\":\"Item Not updated\"," +
+                        "\"code\":400," +
+                        "\"httpStatus\":\"BAD_REQUEST\"" +
+                        "}"));
+
+        verify(logger).info("Item Not updated. code: 400");
     }
 
     @Test

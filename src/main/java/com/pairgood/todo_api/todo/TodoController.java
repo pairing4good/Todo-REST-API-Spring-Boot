@@ -67,7 +67,6 @@ public class TodoController {
             ResponseTodoList responseTodoList = new ResponseTodoList("Request not successful, invalid information provided. Please try again.", HttpStatus.NOT_FOUND);
 
             return new ResponseEntity<>(responseTodoList, HttpStatus.NOT_FOUND);
-
         }
     }
 
