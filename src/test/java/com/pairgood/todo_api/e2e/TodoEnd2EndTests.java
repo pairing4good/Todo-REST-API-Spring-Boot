@@ -1,4 +1,4 @@
-package com.pairgood.todo_api;
+package com.pairgood.todo_api.e2e;
 
 import com.pairgood.todo_api.todo.ResponseTodoList;
 import com.pairgood.todo_api.todo.Todo;
@@ -20,7 +20,7 @@ import static org.springframework.http.HttpStatus.*;
 
 
 @SpringBootTest(webEnvironment= WebEnvironment.RANDOM_PORT)
-public class TodoApiApplicationTests {
+public class TodoEnd2EndTests {
 
 	@SuppressWarnings("unused")
     @LocalServerPort
