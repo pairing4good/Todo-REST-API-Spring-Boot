@@ -126,4 +126,26 @@ public class TodoIntegrationTests {
 
         verifyNoInteractions(logger);
     }
+
+    @Test
+    void shouldCountTodos_WhenTodosFound() throws Exception{
+        when(service.getNumberTodoItem()).thenReturn(1L);
+
+        this.mockMvc.perform(get("/api/v1/todo/todocount"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string("1"));
+
+        verifyNoInteractions(logger);
+    }
+
+    @Test
+    void shouldCountTodos_WhenNoTodosFound() throws Exception{
+        when(service.getNumberTodoItem()).thenReturn(0L);
+
+        this.mockMvc.perform(get("/api/v1/todo/todocount"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string("0"));
+
+        verifyNoInteractions(logger);
+    }
 }
