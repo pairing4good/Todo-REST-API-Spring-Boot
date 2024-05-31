@@ -15,14 +15,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.Matchers.containsString;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.mockito.Mockito.when;
+
 import org.slf4j.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebMvcTest(TodoController.class)
 @Import({LoggingConfiguration.class})
@@ -92,22 +94,36 @@ public class TodoIntegrationTests {
     }
 
     @Test
-    void shouldCreateTodo() throws Exception{
+    void shouldListTodos_WhenTodosFound() throws Exception{
         Todo todo = new Todo(0, "test title", "test description",
-                false, LocalDate.now(), null, null);
-        String todoString = mapper.writeValueAsString(todo);
-        when(service.AddItemToThelist(any(Todo.class))).thenReturn(1L);
+                false, LocalDate.of(2024, 4, 24), null, null);
+        when(service.getMyTodoList()).thenReturn(List.of(todo));
 
-        this.mockMvc.perform(post("/api/v1/todo/additem")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(todoString))
-                .andDo(print()).andExpect(status().isCreated())
-                .andExpect(content().json("{" +
-                        "\"message\":\"Item added to todo list\"," +
-                        "\"code\":201," +
-                        "\"httpStatus\":\"CREATED\"" +
-                        "}"));
+        this.mockMvc.perform(get("/api/v1/todo/todolist"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(content().json("[" +
+                            "{" +
+                                "\"todoTitle\":\"test title\"," +
+                                "\"todoDescription\":\"test description\"," +
+                                "\"todoDate\":\"2024-04-24\"," +
+                                "\"creationDate\":null," +
+                                "\"updateDate\":null," +
+                                "\"todoId\":0," +
+                                "\"complete\":false" +
+                            "}" +
+                        "]"));
 
-        verify(logger).info("Item added to todo list. code: 201");
+        verifyNoInteractions(logger);
+    }
+
+    @Test
+    void shouldListTodos_WhenNoTodosFound() throws Exception{
+        when(service.getMyTodoList()).thenReturn(new ArrayList<>());
+
+        this.mockMvc.perform(get("/api/v1/todo/todolist"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(content().json("[]"));
+
+        verifyNoInteractions(logger);
     }
 }
