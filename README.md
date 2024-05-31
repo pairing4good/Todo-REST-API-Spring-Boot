@@ -44,6 +44,7 @@ As a result, we should write unit tests, which are at the bottom of the pyramid,
 
 - Service/Integration: integrates multiple components together to verify their interactions. 
   - [MockMvc](https://docs.spring.io/spring-framework/reference/testing/spring-mvc-test-framework.html)
+  - [WebMvcTest](https://spring.io/guides/gs/testing-web)
 
 - UI/ End-to-end: starts up the entire application and tests it as a black box.
     - [@SpringBootTest](https://spring.io/guides/gs/testing-web#_test_the_application)
