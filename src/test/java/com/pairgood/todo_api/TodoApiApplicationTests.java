@@ -18,12 +18,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.boot.test.context.SpringBootTest.*;
 import static org.springframework.http.HttpStatus.*;
 
+
 @SpringBootTest(webEnvironment= WebEnvironment.RANDOM_PORT)
 public class TodoApiApplicationTests {
 
-	@LocalServerPort
+	@SuppressWarnings("unused")
+    @LocalServerPort
 	private int port;
 
+	@SuppressWarnings("unused")
 	@Autowired
 	private TestRestTemplate restTemplate;
 
@@ -42,18 +45,20 @@ public class TodoApiApplicationTests {
 		assertEquals(201, response.getStatusCode().value());
 
 		ResponseTodoList body = response.getBody();
-		assertEquals(201, body.getCode());
+		assert body != null;
+        assertEquals(201, body.getCode());
 		assertEquals("Item added to todo list", body.getMessage());
 		assertEquals(CREATED, body.getHttpStatus());
 	}
 
-	@Test
+	@SuppressWarnings({"unchecked", "rawtypes"})
+    @Test
 	void shouldListAtLeastOneTodo(){
 		addTodo(2);
 		List<LinkedHashMap> response = restTemplate
 				.getForObject("http://localhost:" + port + "/api/v1/todo/todolist", List.class);
 
-		assertTrue(response.size() > 0);
+        assertFalse(response.isEmpty());
 		assertEquals(1110, response.get(0).get("todoId"));
 	}
 
@@ -94,13 +99,12 @@ public class TodoApiApplicationTests {
 	}
 
 	private long lookupTodoCount(){
-		long response = restTemplate
+        return restTemplate
 				.getForObject("http://localhost:" + port + "/api/v1/todo/todocount", Long.class);
-
-		return response;
 	}
 
-	private Todo findFirstTodo() throws ParseException {
+	@SuppressWarnings({"rawtypes", "unchecked"})
+    private Todo findFirstTodo() throws ParseException {
 		List<LinkedHashMap> response = restTemplate
 				.getForObject("http://localhost:" + port + "/api/v1/todo/todolist", List.class);
 		LinkedHashMap todoMap = response.get(0);
@@ -109,10 +113,9 @@ public class TodoApiApplicationTests {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
 		Date creationDate = formatter.parse((String) todoMap.get("creationDate"));
 		Date updateDate = formatter.parse((String) todoMap.get("updateDate"));
-		Todo todo = new Todo((Integer) todoMap.get("todoId"), (String) todoMap.get("todoTitle"),
+        return new Todo((Integer) todoMap.get("todoId"), (String) todoMap.get("todoTitle"),
 				(String) todoMap.get("todoDescription"), (Boolean) todoMap.get("complete"),
 				todoDate, creationDate, updateDate);
-		return todo;
 	}
 
 	private void addTodo(int sequence){
@@ -125,6 +128,7 @@ public class TodoApiApplicationTests {
 		assertEquals(201, response.getStatusCode().value());
 
 		ResponseTodoList body = response.getBody();
-		assertEquals(201, body.getCode());
+        assert body != null;
+        assertEquals(201, body.getCode());
 	}
 }
