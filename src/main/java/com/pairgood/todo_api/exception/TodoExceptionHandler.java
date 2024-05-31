@@ -20,11 +20,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+@SuppressWarnings("unused")
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class TodoExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @SuppressWarnings("NullableProblems")
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
@@ -45,6 +48,7 @@ public class TodoExceptionHandler extends ResponseEntityExceptionHandler {
         return objectResponseEntity(TodoCustomException);
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
@@ -55,10 +59,11 @@ public class TodoExceptionHandler extends ResponseEntityExceptionHandler {
         return objectResponseEntity(TodoCustomException);
     }
 
+    @SuppressWarnings({"NullableProblems", "MismatchedQueryAndUpdateOfCollection"})
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
-        List<String> errors = new ArrayList<String>();
+        List<String> errors = new ArrayList<>();
         for (FieldError error : ex.getBindingResult().getFieldErrors()) {
             errors.add(error.getField() + ": " + error.getDefaultMessage());
         }
@@ -74,6 +79,7 @@ public class TodoExceptionHandler extends ResponseEntityExceptionHandler {
         return objectResponseEntity(TodoCustomException);
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         TodoCustomException TodoCustomException = new TodoCustomException(HttpStatus.BAD_REQUEST);
@@ -89,7 +95,7 @@ public class TodoExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({MethodArgumentTypeMismatchException.class})
     public ResponseEntity<Object> handleMethodArgumentTypeMismatch(
             MethodArgumentTypeMismatchException ex, WebRequest request) {
-        String error = ex.getName() + " should be of type: " + ex.getRequiredType().getName();
+        String error = ex.getName() + " should be of type: " + Objects.requireNonNull(ex.getRequiredType()).getName();
 
         TodoCustomException TodoCustomException = new TodoCustomException(HttpStatus.BAD_REQUEST);
 

@@ -33,13 +33,6 @@ public class TodoCustomException  {
         this.code=httpStatus.value();
     }
 
-    TodoCustomException(HttpStatus httpStatus, Throwable error){
-      this();
-      this.httpStatus=httpStatus;
-      this.message="An error has occured";
-      this.ErrorMessage=error.getLocalizedMessage();
-    }
-
     TodoCustomException(HttpStatus httpStatus, String message, Throwable error){
         this();
         this.httpStatus=httpStatus;
