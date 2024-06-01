@@ -5,12 +5,14 @@ import com.pairgood.todo_api.config.LoggingConfiguration;
 import com.pairgood.todo_api.todo.Todo;
 import com.pairgood.todo_api.todo.TodoController;
 import com.pairgood.todo_api.todo.TodoService;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -245,5 +247,26 @@ public class TodoIntegrationTest {
                 .andExpect(content().string("0"));
 
         verifyNoInteractions(logger);
+    }
+
+    @Test
+    void shouldHandleHttpMessageNotReadable() throws Exception{
+        when(service.getNumberTodoItem()).thenThrow(new HttpMessageNotReadableException("test message"));
+
+        this.mockMvc.perform(get("/api/v1/todo/todocount"))
+                .andDo(print()).andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.httpStatus", org.hamcrest.Matchers.is("BAD_REQUEST")))
+                .andExpect(jsonPath("$.message", org.hamcrest.Matchers.is("Malformed JSON request")))
+                .andExpect(jsonPath("$.errorMessage", org.hamcrest.Matchers.is("test message")));
+    }
+
+    @Test
+    void shouldHandleEntityNotFound() throws Exception{
+        when(service.getNumberTodoItem()).thenThrow(new EntityNotFoundException("test message"));
+
+        this.mockMvc.perform(get("/api/v1/todo/todocount"))
+                .andDo(print()).andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.httpStatus", org.hamcrest.Matchers.is("NOT_FOUND")))
+                .andExpect(jsonPath("$.message", org.hamcrest.Matchers.is("test message")));
     }
 }

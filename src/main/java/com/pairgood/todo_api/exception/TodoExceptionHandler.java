@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@SuppressWarnings("unused")
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class TodoExceptionHandler extends ResponseEntityExceptionHandler {
@@ -34,9 +33,6 @@ public class TodoExceptionHandler extends ResponseEntityExceptionHandler {
         String error = "Malformed JSON request";
 
         return objectResponseEntity(new TodoCustomException(HttpStatus.BAD_REQUEST, error, ex));
-    }
-    private ResponseEntity<Object> objectResponseEntity(TodoCustomException TodoCustomException) {
-        return new ResponseEntity<>(TodoCustomException, TodoCustomException.getHttpStatus());
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
@@ -105,5 +101,9 @@ public class TodoExceptionHandler extends ResponseEntityExceptionHandler {
 
         return objectResponseEntity(TodoCustomException);
 
+    }
+
+    private ResponseEntity<Object> objectResponseEntity(TodoCustomException TodoCustomException) {
+        return new ResponseEntity<>(TodoCustomException, TodoCustomException.getHttpStatus());
     }
 }
