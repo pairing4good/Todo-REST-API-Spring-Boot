@@ -20,7 +20,7 @@ import static org.springframework.http.HttpStatus.*;
 
 
 @SpringBootTest(webEnvironment= WebEnvironment.RANDOM_PORT)
-public class TodoEnd2EndTests {
+public class TodoEnd2EndTest {
 
 	@SuppressWarnings("unused")
     @LocalServerPort

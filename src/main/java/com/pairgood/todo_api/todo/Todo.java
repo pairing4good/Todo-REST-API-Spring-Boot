@@ -2,7 +2,6 @@ package com.pairgood.todo_api.todo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
@@ -30,7 +29,7 @@ public class Todo {
     private long TodoId;
 
     @NotBlank
-    @Size(min = 5, message = "A Description should have at least 5 characters")
+    @Size(min = 5, message = "A Title should have at least 5 characters")
     @Column(name = "todo_title")
     private String todoTitle;
 

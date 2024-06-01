@@ -27,7 +27,7 @@ import java.util.List;
 
 @WebMvcTest(TodoController.class)
 @Import({LoggingConfiguration.class})
-public class TodoIntegrationTests {
+public class TodoIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
