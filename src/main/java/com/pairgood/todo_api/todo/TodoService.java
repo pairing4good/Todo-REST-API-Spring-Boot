@@ -38,7 +38,7 @@ public class TodoService {
         logger.info("Item removed from the list");
     }
 
-    @SuppressWarnings({"OptionalGetWithoutIsPresent", "CallToPrintStackTrace"})
+    @SuppressWarnings({"OptionalGetWithoutIsPresent"})
     public long UpdateTodoItem(long todoId, Todo todo){
 
         long updateTodoId=0;
@@ -50,10 +50,10 @@ public class TodoService {
             updatedTodo.setTodoDate(todo.getTodoDate());
             updatedTodo.setComplete(todo.isComplete());
             todoRepository.save(updatedTodo);
-            updateTodoId=updatedTodo.getTodoId();
-            return updateTodoId;
+
+            return updatedTodo.getTodoId();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Unable to update todo {}", todoId, e);
         }
         return updateTodoId;
     }
