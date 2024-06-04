@@ -17,21 +17,21 @@ add item to a to-do list, update, select and remove from the list.
 ## Swagger UI:
 
 ### Add  Item
-<img src="https://github.com/pairing4good/Todo-REST-API-Spring-Boot/blob/master/readme/additem.jpg?raw=true"  alt="Demo screen postman">
+<img src="https://github.com/pairing4good/Todo-REST-API-Spring-Boot/blob/main/readme/additem.jpg?raw=true"  alt="Demo screen postman">
 
 ### Todo list :
-<img src="https://github.com/pairing4good/Todo-REST-API-Spring-Boot/blob/master/readme/todolist.jpg?raw=true"  alt="Demo screen postman">
+<img src="https://github.com/pairing4good/Todo-REST-API-Spring-Boot/blob/main/readme/todolist.jpg?raw=true"  alt="Demo screen postman">
 
 ### Update item
-<img src="https://github.com/pairing4good/Todo-REST-API-Spring-Boot/blob/master/readme/updateItem.jpg?raw=true"  alt="Demo screen postman">
+<img src="https://github.com/pairing4good/Todo-REST-API-Spring-Boot/blob/main/readme/updateItem.jpg?raw=true"  alt="Demo screen postman">
 
 ### Delete item
-<img src="https://github.com/pairing4good/Todo-REST-API-Spring-Boot/blob/master/readme/deleteItem.jpg?raw=true"  alt="Demo screen postman">
+<img src="https://github.com/pairing4good/Todo-REST-API-Spring-Boot/blob/main/readme/deleteItem.jpg?raw=true"  alt="Demo screen postman">
 
 ## Spring Testing
 
 ### Testing Pyramid
-<img src="https://github.com/pairing4good/Todo-REST-API-Spring-Boot/blob/master/readme/test-pyramid.jpg?raw=true"  alt="Testing Pyramid">
+<img src="https://github.com/pairing4good/Todo-REST-API-Spring-Boot/blob/main/readme/test-pyramid.jpg?raw=true"  alt="Testing Pyramid">
 https://martinfowler.com/bliki/TestPyramid.html
 
 At the top of the testing pyramid tests are the slowest and cost the most to run and maintain.  At the bottom of the pyramid tests run the fastest and require very little maintenance.
